@@ -29,3 +29,66 @@ const reviews = [
     text: 'Edison bulb put a bird on it humblebrag, marfa pok pok heirloom fashion axe cray stumptown venmo actually seitan. VHS farm-to-table schlitz, edison bulb pop-up 3 wolf moon tote bag street art shabby chic. ',
   },
 ];
+
+let image = document.getElementById("person-img");
+let nameCurrent = document.getElementById("author");
+let job = document.getElementById("job");
+let info = document.getElementById("info");
+
+const prevBtn = document.querySelector(".prev-btn");
+const nextBtn = document.querySelector(".next-btn");
+const randomBtn = document.querySelector(".random-btn");
+
+let currentIndex = 1;
+
+window.addEventListener("DOMContentLoaded", ()=>{
+  loadCurrent(currentIndex)
+})
+
+prevBtn.addEventListener('click', ()=>{
+  showPrev()
+})
+
+nextBtn.addEventListener('click', ()=>{
+  showNext()
+})
+
+randomBtn.addEventListener('click', ()=>{
+  showRandom();
+})
+
+const loadCurrent = (person) => {
+  const current = reviews[person];
+  image.src = current.img;
+  nameCurrent.textContent = current.name;
+  job.textContent = current.job;
+  info.textContent = current.text
+}
+
+const showPrev = () => {
+  if(currentIndex === 0){
+    currentIndex = reviews.length - 1
+    loadCurrent(currentIndex)
+  }else{
+    currentIndex--
+    loadCurrent(currentIndex)
+  }
+  
+}
+
+const showNext = () => {
+  if(currentIndex < reviews.length - 1){
+    currentIndex++
+    loadCurrent(currentIndex)
+  }else{
+    currentIndex = 0
+    loadCurrent(currentIndex)
+  }
+}
+
+const showRandom = () => {
+  currentIndex = Math.floor(Math.random() * reviews.length);
+  loadCurrent(currentIndex);
+}
+
+
