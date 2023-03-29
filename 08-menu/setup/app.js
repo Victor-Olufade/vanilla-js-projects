@@ -71,4 +71,81 @@ const menu = [
     img: "./images/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: "10th item",
+    category: "tenth",
+    price: 16.99,
+    img: "./images/item-10.jpeg",
+    desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+  }
 ];
+
+
+let displayArr = menu;
+
+const section = document.querySelector('.section-center')
+
+const buttonContainer = document.querySelector('.btn-container')
+
+window.addEventListener('DOMContentLoaded', function(){
+  displayMenuItems(displayArr);
+  displayButtons();
+})
+
+
+
+const displayButtons = () => {
+
+  const categories = menu.reduce(function(values, item){
+    if(!values.includes(item.category)){
+      values.push(item.category)
+    }
+    return values;
+  }, ['all'])
+
+  const Items = categories.map((item)=>{
+    return `<button class="filter-btn" type="button" data-id=${item}>
+    ${item}
+  </button>`
+  })
+
+  buttonContainer.innerHTML = Items.join('');
+
+  const buttons = document.querySelectorAll('.filter-btn')
+
+  buttons.forEach((btn)=>{
+    btn.addEventListener('click', (e)=>{
+      if(e.currentTarget.dataset.id === 'all'){
+        displayMenuItems(menu);
+        return;
+      }
+      else{
+        let newArr = menu.filter((item)=> item.category === e.currentTarget.dataset.id)
+        displayMenuItems(newArr)
+      }
+    })
+  })
+
+}
+
+
+const displayMenuItems = (menu) => {
+  const displayIterables = menu.map((item)=>{
+    return `<article class="menu-item">
+    <img src=${item.img} class="photo" alt="" />
+    <div class="item-info">
+      <header>
+        <h4>${item.title}</h4>
+        <h4 class="price">$${item.price}</h4>
+      </header>
+
+      <p class="item-text">
+        ${item.desc}
+      </p>
+    </div>
+  </article>`
+  })
+
+  section.innerHTML = displayIterables.join('')
+}
